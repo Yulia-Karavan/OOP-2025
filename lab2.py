@@ -86,21 +86,57 @@ class Player:
   def show_inventar(self):
     self.inventar.show_items()
 
+def main():
+  name = input("Введіть ваше ім'я: ")
+  player1 = Player(name, 100)
 
-apple = Food("Яблуко", 20, "фрукт")
-potion_helth = Potion("Зілля здоров'я", 50)
-pie = Food("Пиріг", 35, "страва")
-potato = Food("Картопля", 10, "овоч")
+  shop_items = [Food("Яблуко", 20, "фрукт"), Potion("Зілля здоров'я", 50), Food("Пиріг", 35, "страва"),
+                Food("Картопля", 10, "овоч")]
 
-player1 = Player("Yulia671", 100)
+  while True:
+    print("\n Меню: ")
+    print("1. Купити предмет")
+    print("2. Показати інвентар")
+    print("3. Використати предмети")
+    print("4. Поповнити гаманець")
+    print("5. Показати баланс")
+    print("0. Вихід")
 
-player1.buy(apple)
-player1.buy(potion_helth)
-player1.buy(pie)
-player1.wallet.add_money(15)
-player1.buy(pie)
-player1.buy(potato)
-print("-----------------")
-player1.show_inventar()
-player1.use_inventory()
-player1.show_inventar()
+    choice = input("Оберіть дію: ")
+
+    if choice == "1":
+      for i, item in enumerate(shop_items):
+        print(f"{i+1}. {item.name} - {item.price} монет")
+      try:
+        choice_item = int(input("Оберіть номер предмета: ")) - 1
+        if 0 <= choice_item <= len(shop_items):
+          player1.buy(shop_items[choice_item])
+        else:
+          print("Неправельний вибір")
+      except ValueError:
+        print("Виберіть число!")
+
+    elif choice == "2":
+      player1.show_inventar()
+    
+    elif choice == "3":
+      player1.use_inventory()
+
+    elif choice == "4":
+      try:
+        amount = int(input("Введіть суму поповнення: "))
+        player1.wallet.add_money(amount)
+      except ValueError:
+        print("Виберіть число!")
+
+    elif choice == "5":
+      player1.wallet.get_balance
+
+    elif choice == "0":
+      break
+
+    else:
+      print("Невідома команда.")
+
+if __name__ == "__main__":
+  main()
